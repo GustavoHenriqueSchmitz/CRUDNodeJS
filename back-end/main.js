@@ -1,12 +1,11 @@
 import express from "express"
-import initRoutes from "./routes/routes.js"
 import {initDatabase} from "./db/db.js"
 import router from "./routes/routes.js"
 
 // Server configuration
 export const server = {
     app: express(),
-    port: 8000
+    port: 5000
 }
 
 // Read JSON

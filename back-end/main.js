@@ -1,11 +1,28 @@
-import express from 'express'
+import express from "express"
+import initRoutes from "./routes/routes.js"
+import {initDatabase} from "./db/db.js"
+import router from "./routes/routes.js"
 
 // Server configuration
-const server = {
+export const server = {
     app: express(),
     port: 8000
 }
 
+// Read JSON
+server.app.use(
+    express.urlencoded({
+        extended: true,
+    }),
+)
+
+server.app.use(express.json())
+server.app.use('/api', router)
+
+//Init Database
+initDatabase()
+
+// Init server
 server.app.listen(server.port, ()=>{
     console.log(`Server initiaded in port: ${server.port}`)
 })

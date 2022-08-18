@@ -37,6 +37,17 @@ async function Update(req, res) {
 
     const id = req.params.id
 
+    const personExist = await personsTable.findOne({
+        where: {
+            id : id
+        }
+    })
+
+    if (!personExist) {
+        res.json({message: 'O usuário não existe!'})
+        return
+    }
+
     const {first_name, last_name} = req.body
 
     if (!first_name) {

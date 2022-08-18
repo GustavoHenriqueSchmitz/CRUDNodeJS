@@ -16,8 +16,10 @@ async function Create(req, res) {
 
     if (!first_name) {
         res.json({error: "O nome é obrigatório."})
+        return
     } else if (!last_name) {
         res.json({error: "O sobrenome é obrigatório."})
+        return
     }
 
     const person = {
@@ -52,8 +54,10 @@ async function Update(req, res) {
 
     if (!first_name) {
         res.json({error: "O nome é obrigatório."})
+        return
     } else if (!last_name) {
         res.json({error: "O sobrenome é obrigatório."})
+        return
     }
 
     const person = {

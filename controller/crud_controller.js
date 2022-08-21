@@ -1,12 +1,12 @@
-import {personsTable} from '../db/db.js'
+import personsTable from '../models/person_models.js'
 
 async function Read(req, res) {
     
     try {
         const persons = await personsTable.findAll()
-        res.json(persons)
+        return res.json(persons)
     } catch (error) {
-        res.json({error: error})
+        return res.json({error: error})
     }
 }
 
@@ -15,11 +15,9 @@ async function Create(req, res) {
     const {first_name, last_name} = req.body
 
     if (!first_name) {
-        res.json({error: "O nome é obrigatório."})
-        return
+        return res.json({error: "O nome é obrigatório."})
     } else if (!last_name) {
-        res.json({error: "O sobrenome é obrigatório."})
-        return
+        return res.json({error: "O sobrenome é obrigatório."})
     }
 
     const person = {
@@ -29,9 +27,9 @@ async function Create(req, res) {
 
     try {
         await personsTable.create(person)
-        res.json({message: 'Pessoa inserida com sucesso.'})
+        return res.json({message: 'Pessoa inserida com sucesso.'})
     } catch (error) {
-        res.json({error: error})
+        return res.json({error: error})
     }
 }
 
@@ -46,18 +44,15 @@ async function Update(req, res) {
     })
 
     if (!personExist) {
-        res.json({message: 'O usuário não existe!'})
-        return
+        return res.json({message: 'O usuário não existe!'})
     }
 
     const {first_name, last_name} = req.body
 
     if (!first_name) {
-        res.json({error: "O nome é obrigatório."})
-        return
+        return res.json({error: "O nome é obrigatório."})
     } else if (!last_name) {
-        res.json({error: "O sobrenome é obrigatório."})
-        return
+        return res.json({error: "O sobrenome é obrigatório."})
     }
 
     const person = {
@@ -66,13 +61,13 @@ async function Update(req, res) {
     }
 
     try {
-        const updatedPerson = await personsTable.update(
+        await personsTable.update(
             { first_name: person.first_name, last_name: person.last_name},
             { where: { id: id } }
           )
-        res.json({message: updatedPerson})
+        return res.json({message: "Sucesso!"})
     } catch (error) {
-        res.json({error: error})
+        return res.json({error: error})
     }
 }
 
@@ -87,8 +82,7 @@ async function Delete(req, res) {
     })
 
     if (!person) {
-        res.json({message: 'O usuário não existe!'})
-        return
+        return res.json({message: 'O usuário não existe!'})
     }
 
     try {
@@ -97,9 +91,9 @@ async function Delete(req, res) {
               id: id
             }
         })
-        res.json({message: 'Sucesso!'})
+        return res.json({message: 'Sucesso!'})
     } catch (error) {
-        res.json({error: error})
+        return res.json({error: error})
     }
 }
 

@@ -1,12 +1,6 @@
-import express from "express"
-import {initDatabase} from "./db/db.js"
-import router from "./routes/routes.js"
-
-// Server configuration
-export const server = {
-    app: express(),
-    port: 5000
-}
+import server from './models/server_models.js'
+import express from 'express'
+import router from './routes/routes.js'
 
 // Read JSON
 server.app.use(
@@ -16,12 +10,18 @@ server.app.use(
 )
 
 server.app.use(express.json())
+
+// Define the application routes
 server.app.use('/api', router)
 
-//Init Database
-initDatabase()
+//Test Database
+server.database.authenticate().then(() => {
+    console.log('Connected with the database.')
+  }).catch((err) => {
+    console.log(`Failed to connect to the database: ${err}`)
+})
 
 // Init server
-server.app.listen(server.port, ()=>{
-    console.log(`Server initiaded in port: ${server.port}`)
+server.app.listen(server.serverPort, () => {
+    console.log(`Server initiated in port: ${server.serverPort}`)
 })

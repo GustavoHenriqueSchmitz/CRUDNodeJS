@@ -7,7 +7,6 @@ para subir o banco de dados.<br/>
 
 ## Para iniciar o projeto
 
-* Navegue até a pasta **db** do progeto.
+* Navegue até a pasta **raiz** do progeto.
 * Execute `sudo docker-compose up`.
-* Depois navegue até a pasta raiz.
-* E execute `node main.js`.
+* Depois execute na mesma pasta `node main.js`.

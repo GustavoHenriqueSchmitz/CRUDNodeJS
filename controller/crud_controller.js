@@ -1,9 +1,10 @@
-import personsTable from '../models/person_models.js'
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
 async function Read(req, res) {
     
     try {
-        const persons = await personsTable.findAll()
+        const persons = await prisma.persons.findMany()
         return res.json(persons)
     } catch (error) {
         return res.json({error: error})
@@ -26,7 +27,7 @@ async function Create(req, res) {
     }
 
     try {
-        await personsTable.create(person)
+        await prisma.persons.create({ data: person })
         return res.json({message: 'Pessoa inserida com sucesso.'})
     } catch (error) {
         return res.json({error: error})
@@ -37,9 +38,9 @@ async function Update(req, res) {
 
     const id = req.params.id
 
-    const personExist = await personsTable.findOne({
+    const personExist = await prisma.persons.findUnique({
         where: {
-            id : id
+            id : parseInt(id)
         }
     })
 
@@ -61,12 +62,13 @@ async function Update(req, res) {
     }
 
     try {
-        await personsTable.update(
-            { first_name: person.first_name, last_name: person.last_name},
-            { where: { id: id } }
-          )
+        await prisma.persons.update({
+            where: {id: parseInt(id)},
+            data: person
+        })
         return res.json({message: "Sucesso!"})
     } catch (error) {
+        console.log(error)
         return res.json({error: error})
     }
 }
@@ -75,9 +77,9 @@ async function Delete(req, res) {
 
     const id = req.params.id
 
-    const person = await personsTable.findOne({
+    const person = await prisma.persons.findUnique({
         where: {
-            id : id
+            id : parseInt(id)
         }
     })
 
@@ -86,9 +88,9 @@ async function Delete(req, res) {
     }
 
     try {
-        await personsTable.destroy({
+        await prisma.persons.delete({
             where: {
-              id: id
+              id: parseInt(id)
             }
         })
         return res.json({message: 'Sucesso!'})

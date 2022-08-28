@@ -9,8 +9,8 @@ datasource db {
 
 model persons {
   id         Int      @id @default(autoincrement())
-  first_name String   @db.VarChar(255)
-  last_name  String   @db.VarChar(255)
-  createdAt  DateTime @db.DateTime(0)
-  updatedAt  DateTime @db.DateTime(0)
+  first_name String   @db.VarChar(100)
+  last_name  String   @db.VarChar(100)
+  createdAt  DateTime @default(now()) @db.Timestamp(0)
+  updatedAt  DateTime @default(now()) @db.Timestamp(0)
 }
